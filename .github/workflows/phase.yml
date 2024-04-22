@@ -20,6 +20,8 @@ jobs:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: step2
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
             # sleep 20
-            echo JSON.parse(${{ github }})
+            echo "$GITHUB_CONTEXT"
