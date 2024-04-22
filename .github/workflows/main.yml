@@ -18,12 +18,12 @@ jobs:
 
             - name: Turnstyle
               uses: softprops/turnstyle@v1
-              with:
-                continue-after-seconds: 30
+              # with:
+              #   continue-after-seconds: 30
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: step2
               run: |
-                  sleep 30
+                  sleep 20
                   echo "hello"
