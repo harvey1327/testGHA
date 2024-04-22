@@ -22,4 +22,4 @@ jobs:
       - name: step2
         run: |
             sleep 20
-            echo "world"
+            echo JSON.parse(${{ github }})
