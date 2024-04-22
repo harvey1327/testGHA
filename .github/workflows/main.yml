@@ -18,7 +18,8 @@ jobs:
 
             - name: Turnstyle
               uses: softprops/turnstyle@v1
-              # with:
+              with:
+                poll-interval-seconds: 5
               #   continue-after-seconds: 30
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
