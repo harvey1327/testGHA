@@ -7,8 +7,6 @@ on:
         report-success: { type: boolean }
         job-result: { type: string }
         runs-on: { type: string, required: true}
-    secrets:
-        SLACK_TOKEN: { required: true }
 
 jobs:
     notification:
@@ -25,6 +23,7 @@ jobs:
                 payload: '{"text": "Build failure ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",  "attachments": [{"color": "FF0000"}]}'
               env:
                 SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
+                SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
         
             - name: success
               id: slack-success
@@ -35,3 +34,4 @@ jobs:
                 payload: '{"text": "Build success ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",  "attachments": [{"color": "00FF00"}]}'
               env:
                 SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
+                SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
