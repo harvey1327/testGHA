@@ -1,0 +1,37 @@
+name: 'notification'
+
+on:
+  workflow_call:
+    inputs:
+        channel: { type: string }
+        report-success: { type: boolean }
+        job-result: { type: string }
+        runs-on: { type: string, required: true}
+    secrets:
+        SLACK_TOKEN: { required: true }
+
+jobs:
+    notification:
+        runs-on:
+            - ${{ inputs.runs-on }}
+        name: notification
+        steps:
+            - name: failure
+              id: slack-failure
+              if: ${{ inputs.job-result }} == 'failure'
+              uses: slackapi/slack-github-action@v1.26.0
+              with:
+                channel-id: ${{ inputs.channel }}
+                payload: '{"text": "Build failure ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",  "attachments": ["color": "FF0000"]}'
+              env:
+                SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        
+            - name: success
+              id: slack-success
+              if: ${{ inputs.job-result }} == 'success' && ${{ inputs.report-success }}
+              uses: slackapi/slack-github-action@v1.26.0
+              with:
+                channel-id: ${{ inputs.channel }}
+                payload: '{"text": "Build success ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",  "attachments": ["color": "00FF00"]}'
+              env:
+                SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}

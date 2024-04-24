@@ -1,0 +1,41 @@
+on:
+  workflow_call:
+    inputs:
+      runs-on: { type: string, required: true}
+      container-image: { type: string, required: true, description: "Image that the job steps will run on" }
+      directory: { type: string }
+      task: { type: string, required: true }
+      phase-locks: { type: string }
+      parameters: { type: string }
+      artifacts: { type: string }
+      slack-channel: { type: string }
+      slack-report-success: { type: boolean, default: false }
+    secrets:
+      SLACK_TOKEN: { required: false }
+
+jobs:
+  cdBuild:
+    uses: ./.github/workflows/phase.yaml
+    secrets: inherit
+    with:
+      runs-on: ${{ inputs.runs-on }}
+      container-image: ${{ inputs.container-image }}
+      directory: ${{ inputs.directory }}
+      phase-name: cdBuild
+      task: |
+        ${{ inputs.task }}
+      phase-locks: ${{ inputs.phase-locks }}
+      parameters: ${{ inputs.parameters }}
+      artifacts: ${{ inputs.artifacts }}
+  
+  notification:
+    if: ${{ github.ref_name == 'master' || github.ref_name == 'main' }} && ${{ inputs.slack-channel != ''}} && ${{ always() }}
+    uses: ./.github/workflows/notification.yaml
+    needs: cdBuild
+    with:
+      channel: ${{ inputs.slack-channel }}
+      report-success: ${{ inputs.slack-report-success }}
+      job-result: ${{ needs.cdBuild.result }}
+      runs-on: ${{ inputs.runs-on }}
+    secrets:
+      SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}

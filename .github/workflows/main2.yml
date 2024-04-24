@@ -1,6 +1,0 @@
-name: main2
-on:
-    workflow_dispatch:
-jobs:
-    main1:
-        uses: harvey1327/testGHA/.github/workflows/phase.yml@main

@@ -23,7 +23,7 @@ name: cluster-info
       - cluster-info/**
 jobs:
   cluster-info:
-    uses: sky-uk/core-workflows/.github/workflows/simple-shape.yaml@23275_slack_notification
+    uses: ./.github/workflows/simple-shape.yaml
     secrets: inherit
     with:
       directory: cluster-info

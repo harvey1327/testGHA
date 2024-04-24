@@ -1,0 +1,30 @@
+name: 'phase'
+
+on:
+  workflow_call:
+    inputs:
+      runs-on: { type: string, required: true }
+      container-image: { type: string, required: true, description: "Image that the job steps will run on" }
+      directory: { type: string }
+      fetch-depth: { type: number, default: 10 }
+      fetch-tags: { type: string, default: 'false' }
+      phase-name: { type: string, required: true, description: 'The name of this phase without spaces' }
+      task: { type: string, required: true }
+      master-only: { type: boolean, default: false }
+      artifacts: { type: string }
+      download-artifacts: { type: string }
+      download-path: { type: string, default: '.' }
+      phase-locks: { type: string, description: 'This is a comma-separated list of lock names' }
+      parameters: { type: string }
+
+jobs:
+  phase:
+    if: (!inputs.master-only) || (github.ref_name == 'master') || (github.ref_name == 'main')
+    runs-on:
+      - ${{ inputs.runs-on }}
+    container:
+      image: ${{ inputs.container-image }}
+    steps:
+      - name: someBash
+        shell: bash
+        run: echo "hello"
