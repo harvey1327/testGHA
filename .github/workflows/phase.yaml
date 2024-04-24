@@ -25,4 +25,4 @@ jobs:
     steps:
       - name: someBash
         shell: bash
-        run: echo "hello"
+        run: echo "hello"; exit 1
