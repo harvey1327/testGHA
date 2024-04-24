@@ -19,10 +19,9 @@ jobs:
               if: ${{ inputs.job-result }} == 'failure'
               uses: slackapi/slack-github-action@v1.26.0
               with:
-                channel-id: ${{ inputs.channel }}
+                # channel-id: ${{ inputs.channel }}
                 payload: '{"text": "Build failure ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",  "attachments": [{"color": "FF0000"}], "channel": "${{ inputs.channel }}"}'
               env:
-                # SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
                 SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
                 SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
@@ -32,9 +31,8 @@ jobs:
               if: ${{ inputs.job-result }} == 'success' && ${{ inputs.report-success }}
               uses: slackapi/slack-github-action@v1.26.0
               with:
-                channel-id: ${{ inputs.channel }}
+                # channel-id: ${{ inputs.channel }}
                 payload: '{"text": "Build success ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",  "attachments": [{"color": "00FF00"}], "channel": "${{ inputs.channel }}"}'
               env:
-                # SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
                 SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
                 SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
