@@ -10,8 +10,6 @@ on:
       artifacts: { type: string }
       slack-channel: { type: string }
       slack-report-success: { type: boolean, default: false }
-    secrets:
-      SLACK_TOKEN: { required: false }
 
 jobs:
   cdBuild:
@@ -31,11 +29,10 @@ jobs:
   notification:
     if: ${{ (github.ref_name == 'master' || github.ref_name == 'main') && inputs.slack-channel != '' && always() }}
     uses: ./.github/workflows/notification.yaml
+    secrets: inherit
     needs: cdBuild
     with:
       channel: ${{ inputs.slack-channel }}
       report-success: ${{ inputs.slack-report-success }}
       job-result: ${{ needs.cdBuild.result }}
       runs-on: ${{ inputs.runs-on }}
-    secrets:
-      SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
