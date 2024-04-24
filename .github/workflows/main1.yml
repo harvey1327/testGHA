@@ -34,4 +34,5 @@ jobs:
       runs-on: ubuntu-latest
       task: echo "hello world"
       slack-channel: '#core-platform-alertst'
+      slack-report-success: true
     secrets: inherit

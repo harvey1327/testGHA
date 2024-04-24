@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
         channel: { type: string }
-        report-success: { type: boolean }
+        report-success: { type: boolean, default: false }
         job-result: { type: string }
         runs-on: { type: string, required: true}
 
