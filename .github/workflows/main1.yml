@@ -1,6 +1,36 @@
-name: main1
-on:
-    workflow_dispatch:
+name: cluster-info
+"on":
+  workflow_dispatch:
+    inputs:
+      archive:
+        description: Archive the artifact
+        type: boolean
+      logLevel:
+        description: logging level
+        default: info
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      tags:
+        description: Test scenario tags
+        type: string
+  push:
+    branches:
+      - master
+    paths:
+      - cluster-info/**
 jobs:
-    main1:
-        uses: harvey1327/testGHA/.github/workflows/phase.yml@main
+  cluster-info:
+    uses: sky-uk/core-workflows/.github/workflows/simple-shape.yaml@23275_slack_notification
+    secrets: inherit
+    with:
+      directory: cluster-info
+      parameters: |
+        export archive=${{ toJSON(inputs.archive) }}
+        export logLevel=${{ toJSON(inputs.logLevel) }}
+        export tags=${{ toJSON(inputs.tags) }}
+      phase-locks: test-team-1-core-jenkins-test-app-1-cluster-info-cdBuild,lock1,lock2
+      runs-on: ubuntu-latest
+      task: echo "hello world"
