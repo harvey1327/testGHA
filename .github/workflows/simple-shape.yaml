@@ -2,7 +2,7 @@ on:
   workflow_call:
     inputs:
       runs-on: { type: string, required: true}
-      container-image: { type: string, required: true, description: "Image that the job steps will run on" }
+      container-image: { type: string, required: false, description: "Image that the job steps will run on" }
       directory: { type: string }
       task: { type: string, required: true }
       phase-locks: { type: string }

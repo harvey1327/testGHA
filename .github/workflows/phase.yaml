@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       runs-on: { type: string, required: true }
-      container-image: { type: string, required: true, description: "Image that the job steps will run on" }
+      container-image: { type: string, required: false, description: "Image that the job steps will run on" }
       directory: { type: string }
       fetch-depth: { type: number, default: 10 }
       fetch-tags: { type: string, default: 'false' }
@@ -22,8 +22,6 @@ jobs:
     if: (!inputs.master-only) || (github.ref_name == 'master') || (github.ref_name == 'main')
     runs-on:
       - ${{ inputs.runs-on }}
-    container:
-      image: ${{ inputs.container-image }}
     steps:
       - name: someBash
         shell: bash
