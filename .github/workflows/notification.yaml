@@ -19,7 +19,7 @@ jobs:
               if: ${{ inputs.job-result == 'failure' }}
               uses: slackapi/slack-github-action@v1.26.0
               with:
-                payload: '{"text": "Build failure ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",  "attachments": [{"color": "FF0000"}], "channel": "${{ inputs.channel }}"}'
+                payload: '{"text": "Build failure ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",  "attachments": [{"color": "FF0000","author_name": "Github Action", "text": "Optional text that appears within the attachment"}], "channel": "${{ inputs.channel }}"}'
               env:
                 SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
                 SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
@@ -30,7 +30,7 @@ jobs:
               if: ${{ inputs.job-result == 'success' && inputs.report-success }}
               uses: slackapi/slack-github-action@v1.26.0
               with:
-                payload: '{"text": "Build success ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",  "attachments": [{"color": "00FF00"}], "channel": "${{ inputs.channel }}"}'
+                payload: '{"text": "Build success ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",  "attachments": [{"color": "00FF00","author_name": "Github Action", "text": "Optional text that appears within the attachment"}], "channel": "${{ inputs.channel }}"}'
               env:
                 SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
                 SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
