@@ -22,6 +22,14 @@ name: cluster-info
     paths:
       - cluster-info/**
 jobs:
+  someJob:
+    runs-on: ubuntu-latest
+    steps:
+      - name: job
+        run: | 
+            echo ${{ github.ref_name }}
+            echo ${{ github.event.repository.default_branch }}
+
   cluster-info:
     uses: ./.github/workflows/simple-shape.yaml
     with:
