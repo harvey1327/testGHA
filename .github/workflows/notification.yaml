@@ -19,7 +19,7 @@ jobs:
               if: ${{ inputs.job-result == 'failure' }}
               uses: slackapi/slack-github-action@v1.26.0
               with:
-                payload: '{"text": "Build failure ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",  "attachments": [{"color": "FF0000","author_name": "Github Action", "text": "Optional text that appears within the attachment"}], "channel": "${{ inputs.channel }}"}'
+                payload: '{"channel": "${{ inputs.channel }}", "username": "Github Actions", "icon_emoji" : ":github:", "attachments": [{"color": "FF0000", "text": "Build failure ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"}]}'
               env:
                 SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
                 SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
